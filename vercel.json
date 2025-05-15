@@ -5,18 +5,15 @@
       "src": "proyecto/front/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "build",
+        "distDir": "proyecto/front/build",
         "buildCommand": "cd proyecto/front && npm install && npm run build"
       }
     }
   ],
   "routes": [
     {
-      "handle": "filesystem"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/proyecto/front/build/$1"
     }
   ]
 }
