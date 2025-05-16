@@ -4,6 +4,7 @@ import { Modal, Button, Card, Row, Col, Tab, Nav } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import './dashboard.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import config from './config';
 
 const SecretaryDashboard = ({ onLogout }) => {
   const [datos, setDatos] = useState([]);
@@ -18,11 +19,11 @@ const SecretaryDashboard = ({ onLogout }) => {
 
   useEffect(() => {
     // Cargar datos iniciales
-    axios.get("http://localhost:3001/proyecto/datos")
+    axios.get(`${config.apiUrl}/proyecto/datos`)
       .then(response => setDatos(response.data))
       .catch(error => console.error("Error:", error));
 
-    axios.get("http://localhost:3001/proyecto/secondSheetData")
+    axios.get(`${config.apiUrl}/proyecto/secondSheetData`)
       .then(response => setSecondSheetData(response.data))
       .catch(error => console.error("Error:", error));
   }, []);

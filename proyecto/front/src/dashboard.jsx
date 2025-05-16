@@ -6,6 +6,7 @@ import { Modal, Button, Card, Row, Col, Nav, Tab } from 'react-bootstrap';
 import useSectionToggle from "./sectionToggle"; // Ruta al para controlar botones
 import './dashboard.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import config from './config';
 
 const Dashboard = ({ onLogout }) => {
   const [datos, setDatos] = useState([]);
@@ -118,7 +119,7 @@ const Dashboard = ({ onLogout }) => {
       return item;
     });
 
-    axios.put(`http://localhost:3001/proyecto/updateSecondSheetData`, updatedData)
+    axios.put(`${config.apiUrl}/proyecto/updateSecondSheetData`, updatedData)
       .then(response => {
         setSecondSheetData(updatedData);
         setEditingSecondSheetData(null);
@@ -161,7 +162,7 @@ const Dashboard = ({ onLogout }) => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:3001/proyecto/datos")
+    axios.get(`${config.apiUrl}/proyecto/datos`)
       .then(response => {
         console.log("Datos recibidos:", response.data);
         setDatos(response.data);
@@ -184,7 +185,7 @@ const Dashboard = ({ onLogout }) => {
 
   // Agregar nuevo useEffect para cargar datos de la segunda hoja
   useEffect(() => {
-    axios.get("http://localhost:3001/proyecto/secondSheetData")
+    axios.get(`${config.apiUrl}/proyecto/secondSheetData`)
       .then(response => {
         console.log("Datos de la segunda hoja:", response.data);
         setSecondSheetData(response.data);
@@ -196,7 +197,7 @@ const Dashboard = ({ onLogout }) => {
 
   const handleDelete = (id) => {
       if (window.confirm("¿Estás seguro de que deseas eliminar este estudiante? Esta acción no se puede deshacer.")) {
-        axios.delete(`http://localhost:3001/proyecto/borrarUsuario/${id}`)
+        axios.delete(`${config.apiUrl}/proyecto/borrarUsuario/${id}`)
         .then(response => {
           setDatos(datos.filter(dato => dato.id !== id));
         })
@@ -218,7 +219,7 @@ const Dashboard = ({ onLogout }) => {
   };
 
   const handleUpdate = () => {
-    axios.put(`http://localhost:3001/proyecto/actualizarUsuario/${editingData.id}`, formData)
+    axios.put(`${config.apiUrl}/proyecto/actualizarUsuario/${editingData.id}`, formData)
       .then(response => {
         setDatos(datos.map(dato => (dato.id === editingData.id ? { ...dato, ...formData } : dato)));
         setEditingData(null);
@@ -239,7 +240,7 @@ const Dashboard = ({ onLogout }) => {
   };
 
   const handleNewDataSubmit = () => {
-    axios.post("http://localhost:3001/proyecto/registrarUsuario", newData)
+    axios.post(`${config.apiUrl}/proyecto/registrarUsuario`, newData)
       .then(response => {
         setDatos([...datos, response.data.data]);
         alert('Alumno agregado exitosamente');
@@ -318,7 +319,7 @@ const Dashboard = ({ onLogout }) => {
 
   const handleSaveChanges = () => {
     if (selectedData) {
-      axios.put(`http://localhost:3001/proyecto/actualizarUsuario/${selectedData.id}`, selectedData)
+      axios.put(`${config.apiUrl}/proyecto/actualizarUsuario/${selectedData.id}`, selectedData)
         .then(response => {
           setDatos(datos.map(dato => (dato.id === selectedData.id ? { ...dato, ...selectedData } : dato)));
           handleClosePopup();
@@ -356,7 +357,7 @@ const Dashboard = ({ onLogout }) => {
             nombre: estudiante.nombre
         };
 
-        axios.post("http://localhost:3001/proyecto/addOrUpdateSecondSheetData", newSecondSheetData)
+        axios.post(`${config.apiUrl}/proyecto/addOrUpdateSecondSheetData`, newSecondSheetData)
             .then(response => {
                 if (response.data.success) {
                     alert("Datos agregados correctamente");
