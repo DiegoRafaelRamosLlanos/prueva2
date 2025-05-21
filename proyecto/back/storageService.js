@@ -1,15 +1,11 @@
 import XLSX from "xlsx";
 import fs from "fs";
 import path from "path";
+import os from 'os';
 
-// Configuración de la ruta del archivo Excel
 const getExcelPath = () => {
-    // En producción (Render), usar una ruta persistente
-    if (process.env.NODE_ENV === 'production') {
-        return process.env.EXCEL_PATH || '/opt/render/project/data/archivo.xlsx';
-    }
-    // En desarrollo, usar la ruta local
-    return path.join(process.cwd(), "excel/archivo.xlsx");
+    // Usar el directorio temporal del sistema
+    return path.join(os.tmpdir(), "archivo.xlsx");
 };
 
 // Asegurarse de que el directorio existe
