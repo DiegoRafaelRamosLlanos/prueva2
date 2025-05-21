@@ -1,7 +1,9 @@
 import XLSX from "xlsx";
 import path from "path";
+import XLSX from "xlsx";
+import { getExcelPath } from '../storageService.js';
 
-const filePath = path.join(process.cwd(), "excel/archivo.xlsx"); 
+const filePath = getExcelPath();
 
 const readExcel = () => {
     const workbook = XLSX.readFile(filePath);
