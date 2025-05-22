@@ -1,6 +1,5 @@
 import XLSX from "xlsx";
 import path from "path";
-import XLSX from "xlsx";
 import { getExcelPath } from '../storageService.js';
 
 const filePath = getExcelPath();
