@@ -8,7 +8,7 @@ const port = process.env.PORT || 3001;
 
 // Configuración de CORS más flexible
 app.use(cors({
-    origin: ['http://localhost:3000', process.env.FRONTEND_URL],
+    origin: ['http://localhost:3000', process.env.FRONTEND_URL,'https://prueva2.vercel.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept'],
 }));
